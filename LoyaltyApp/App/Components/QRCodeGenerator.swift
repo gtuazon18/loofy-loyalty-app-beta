@@ -37,8 +37,9 @@ struct QRCodeView: View {
         guard let outputImage = filter.outputImage else { return nil }
 
         // Scale up the QR code for crisp rendering
-        let scaleX = (size - 40) * UIScreen.main.scale / outputImage.extent.size.width
-        let scaleY = (size - 40) * UIScreen.main.scale / outputImage.extent.size.height
+        let displayScale: CGFloat = 3.0
+        let scaleX = (size - 40) * displayScale / outputImage.extent.size.width
+        let scaleY = (size - 40) * displayScale / outputImage.extent.size.height
         let scaledImage = outputImage.transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
 
         guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else { return nil }

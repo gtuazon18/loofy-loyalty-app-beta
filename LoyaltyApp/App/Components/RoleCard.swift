@@ -5,25 +5,16 @@ struct RoleCard: View {
     var action: () -> Void
 
     var body: some View {
-        Button(action: action) {
+        Button {
+            action()
+        } label: {
             HStack(spacing: 16) {
-                // Icon with gradient background + inner glow
+                // Icon with gradient background
                 ZStack {
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
                         .fill(accentGradient)
                         .frame(width: 50, height: 50)
-                        .shadow(color: accentColor.opacity(0.3), radius: 8, y: 3)
-                    
-                    // Inner highlight
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(
-                            LinearGradient(
-                                colors: [.white.opacity(0.25), .clear],
-                                startPoint: .topLeading,
-                                endPoint: .center
-                            )
-                        )
-                        .frame(width: 50, height: 50)
+                        .shadow(color: accentColor.opacity(0.2), radius: 8, y: 3)
 
                     Image(systemName: role.iconName)
                         .font(.system(size: 24, weight: .medium))
@@ -33,7 +24,7 @@ struct RoleCard: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(role.displayName)
                         .font(.headline.weight(.semibold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Palette.textPrimary)
                     Text(subtitle)
                         .font(.subheadline)
                         .foregroundStyle(Palette.muted)
@@ -43,11 +34,10 @@ struct RoleCard: View {
 
                 Image(systemName: "chevron.right")
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(.white.opacity(0.4))
+                    .foregroundStyle(Palette.muted)
             }
             .padding(16)
-            .glassCard(cornerRadius: 18, opacity: 0.06, strokeOpacity: 0.10)
-            .shadow(color: Color.black.opacity(0.2), radius: 12, y: 6)
+            .glassCard(cornerRadius: 18)
         }
         .buttonStyle(.plain)
     }
@@ -63,7 +53,7 @@ struct RoleCard: View {
     private var accentColor: Color {
         switch role {
         case .customer: return Color(hex: "F5A623")
-        case .merchant: return Color(hex: "7C3AED")
+        case .merchant: return Color(hex: "1A1A1A")
         case .admin: return Color(hex: "E8455E")
         }
     }
@@ -73,7 +63,7 @@ struct RoleCard: View {
         case .customer:
             return LinearGradient(colors: [Color(hex: "FFD89E"), Color(hex: "F5A623")], startPoint: .topLeading, endPoint: .bottomTrailing)
         case .merchant:
-            return LinearGradient(colors: [Color(hex: "A78BFA"), Color(hex: "7C3AED")], startPoint: .topLeading, endPoint: .bottomTrailing)
+            return LinearGradient(colors: [Color(hex: "333333"), Color(hex: "1A1A1A")], startPoint: .topLeading, endPoint: .bottomTrailing)
         case .admin:
             return LinearGradient(colors: [Color(hex: "FF6B8A"), Color(hex: "E8455E")], startPoint: .topLeading, endPoint: .bottomTrailing)
         }
@@ -88,6 +78,6 @@ struct RoleCard_Previews: PreviewProvider {
             RoleCard(role: .admin, action: {})
         }
         .padding()
-        .background(Palette.midnight)
+        .background(Color.white)
     }
 }

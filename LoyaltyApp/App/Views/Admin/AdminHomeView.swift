@@ -8,7 +8,7 @@ struct AdminHomeView: View {
         ZStack {
             // Refined background
             ZStack {
-                LinearGradient(colors: [Palette.midnight, Palette.navy], startPoint: .top, endPoint: .bottom)
+                Color.white
                     .ignoresSafeArea()
 
                 Circle()
@@ -43,10 +43,10 @@ struct AdminHomeView: View {
                 HStack(spacing: 6) {
                     Text("Loofy")
                         .font(.title2.weight(.bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Palette.textPrimary)
                     Text("ADMIN")
                         .font(.caption2.weight(.bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Palette.textPrimary)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
                         .background(
@@ -61,10 +61,10 @@ struct AdminHomeView: View {
             Spacer()
             Button(action: { session.signOut() }) {
                 Image(systemName: "power")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
                     .padding(10)
-                    .background(Color.white.opacity(0.06), in: Circle())
-                    .overlay(Circle().stroke(Color.white.opacity(0.08)))
+                    .background(Color.black.opacity(0.03), in: Circle())
+                    .overlay(Circle().stroke(Color.black.opacity(0.04)))
             }
         }
     }
@@ -80,21 +80,21 @@ struct AdminHomeView: View {
                 } label: {
                     Text(tab.title)
                         .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(active ? .white : .white.opacity(0.6))
+                        .foregroundStyle(active ? .white : Palette.textSecondary)
                         .padding(.vertical, 10)
                         .frame(maxWidth: .infinity)
                         .background(
                             active ?
-                                AnyShapeStyle(LinearGradient(colors: [Palette.mint, Color(hex: "7C3AED")], startPoint: .leading, endPoint: .trailing)) :
-                                AnyShapeStyle(Color.white.opacity(0.06))
+                                AnyShapeStyle(LinearGradient(colors: [Color(hex: "1A1A1A"), Color(hex: "333333")], startPoint: .leading, endPoint: .trailing)) :
+                                AnyShapeStyle(Color.black.opacity(0.03))
                         )
                         .clipShape(Capsule())
                 }
             }
         }
         .padding(4)
-        .background(Color.white.opacity(0.04), in: Capsule())
-        .overlay(Capsule().stroke(Color.white.opacity(0.06)))
+        .background(Color.black.opacity(0.02), in: Capsule())
+        .overlay(Capsule().stroke(Color.black.opacity(0.03)))
     }
 
     @ViewBuilder
@@ -134,7 +134,7 @@ private struct OverviewContent: View {
             VStack(alignment: .leading, spacing: 12) {
                 Text("Platform Health")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
 
                 HStack(spacing: 14) {
                     MetricCard(title: "Active Users", value: "12,430", delta: "+4.2%", color: Palette.mint)
@@ -150,7 +150,7 @@ private struct OverviewContent: View {
             VStack(alignment: .leading, spacing: 12) {
                 Text("Engagement")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
 
                 HStack(spacing: 14) {
                     EngagementCard(title: "Repeat Visit Rate", value: "34%", target: "40%", progress: 0.85)
@@ -162,7 +162,7 @@ private struct OverviewContent: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text("Live Campaigns")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
                 CampaignRow(title: "Spring Boost", status: "Live", merchants: 42, color: .green)
                 CampaignRow(title: "Weekend Multiplier", status: "Scheduled", merchants: 18, color: .orange)
                 CampaignRow(title: "Referral Month", status: "Live", merchants: 67, color: .green)
@@ -174,7 +174,7 @@ private struct OverviewContent: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text("System Alerts")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
 
                 AlertRow(icon: "exclamationmark.triangle.fill", message: "High redemption velocity detected at 3 merchants", severity: .warning)
                 AlertRow(icon: "shield.fill", message: "12 fraud attempts blocked today", severity: .info)
@@ -195,10 +195,10 @@ private struct EngagementCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .foregroundStyle(.white.opacity(0.75))
+                .foregroundStyle(Palette.textSecondary)
                 .font(.caption)
             Text(value)
-                .foregroundStyle(.white)
+                .foregroundStyle(Palette.textPrimary)
                 .font(.title3.weight(.bold))
             HStack(spacing: 4) {
                 Text("Target: \(target)")
@@ -208,11 +208,11 @@ private struct EngagementCard: View {
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Capsule()
-                        .fill(Color.white.opacity(0.08))
+                        .fill(Color.black.opacity(0.04))
                         .frame(height: 4)
                     Capsule()
                         .fill(
-                            LinearGradient(colors: [Palette.mint, Color(hex: "7C3AED")], startPoint: .leading, endPoint: .trailing)
+                            LinearGradient(colors: [Color(hex: "1A1A1A"), Color(hex: "333333")], startPoint: .leading, endPoint: .trailing)
                         )
                         .frame(width: geo.size.width * progress, height: 4)
                 }
@@ -249,7 +249,7 @@ private struct AlertRow: View {
                 .frame(width: 20)
             Text(message)
                 .font(.subheadline)
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(Palette.textPrimary)
             Spacer()
         }
         .padding(.vertical, 4)
@@ -275,7 +275,7 @@ private struct MerchantsContent: View {
             HStack {
                 Text("All Merchants")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
                 Spacer()
                 Text("\(merchants.count) total")
                     .font(.caption)
@@ -287,7 +287,7 @@ private struct MerchantsContent: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(Palette.muted)
                 TextField("Search merchants...", text: $searchText)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
             }
             .padding(14)
             .glassCard(cornerRadius: 14, opacity: 0.06, strokeOpacity: 0.08)
@@ -302,18 +302,18 @@ private struct MerchantsContent: View {
             ForEach(merchants, id: \.name) { merchant in
                 HStack(spacing: 14) {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Color.white.opacity(0.06))
+                        .fill(Color.black.opacity(0.03))
                         .frame(width: 44, height: 44)
                         .overlay(
                             Text(String(merchant.name.prefix(1)))
                                 .font(.headline.weight(.bold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
                         )
 
                     VStack(alignment: .leading, spacing: 3) {
                         Text(merchant.name)
                             .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Palette.textPrimary)
                         Text("\(merchant.members) members • \(merchant.plan)")
                             .font(.caption)
                             .foregroundStyle(Palette.muted)
@@ -351,12 +351,12 @@ private struct PlanBadge: View {
             Circle().fill(color).frame(width: 8, height: 8)
             Text("\(count) \(plan)")
                 .font(.caption.weight(.medium))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(Palette.textPrimary)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(Color.white.opacity(0.04), in: Capsule())
-        .overlay(Capsule().stroke(Color.white.opacity(0.06)))
+        .background(Color.black.opacity(0.02), in: Capsule())
+        .overlay(Capsule().stroke(Color.black.opacity(0.03)))
     }
 }
 
@@ -405,9 +405,9 @@ private struct RulesContent: View {
     @ViewBuilder
     private func row(label: String, value: String) -> some View {
         HStack {
-            Text(label).foregroundStyle(.white)
+            Text(label).foregroundStyle(Palette.textPrimary)
             Spacer()
-            Text(value).foregroundStyle(.white.opacity(0.75))
+            Text(value).foregroundStyle(Palette.textSecondary)
         }
         .font(.subheadline)
     }
@@ -422,7 +422,7 @@ private struct ReportsContent: View {
             VStack(alignment: .leading, spacing: 12) {
                 Text("Monthly Revenue")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
 
                 HStack(alignment: .bottom, spacing: 8) {
                     ForEach(["Jan", "Feb", "Mar", "Apr", "May", "Jun"], id: \.self) { month in
@@ -459,15 +459,15 @@ private struct ReportsContent: View {
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(entry)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
                             Text("Today, 10:12 AM")
-                                .foregroundStyle(.white.opacity(0.5))
+                                .foregroundStyle(Palette.muted)
                                 .font(.caption)
                         }
                         Spacer()
                     }
                     .padding(.vertical, 6)
-                    Divider().background(Color.white.opacity(0.06))
+                    Divider().background(Color.black.opacity(0.03))
                 }
             }
         }
@@ -502,10 +502,10 @@ private struct MetricCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .foregroundStyle(.white.opacity(0.75))
+                .foregroundStyle(Palette.textSecondary)
                 .font(.subheadline)
             Text(value)
-                .foregroundStyle(.white)
+                .foregroundStyle(Palette.textPrimary)
                 .font(.title3.weight(.bold))
             Text(delta)
                 .foregroundStyle(delta.contains("-") ? Color.red : color)
@@ -526,16 +526,16 @@ private struct CampaignRow: View {
     var body: some View {
         HStack {
             Circle().fill(color).frame(width: 10, height: 10)
-            Text(title).foregroundStyle(.white)
+            Text(title).foregroundStyle(Palette.textPrimary)
             Spacer()
             if merchants > 0 {
                 Text("\(merchants) merchants")
                     .font(.caption)
-                    .foregroundStyle(.white.opacity(0.5))
+                    .foregroundStyle(Palette.muted)
             }
             Text(status)
                 .font(.caption.weight(.medium))
-                .foregroundStyle(.white.opacity(0.75))
+                .foregroundStyle(Palette.textSecondary)
         }
     }
 }
@@ -548,7 +548,7 @@ private struct RuleCard<Content: View>: View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
                 .font(.headline.weight(.semibold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Palette.textPrimary)
             content
         }
         .padding(16)
@@ -569,9 +569,9 @@ private struct ButtonRow: View {
                 Spacer()
                 Image(systemName: "chevron.right")
                     .font(.caption)
-                    .foregroundStyle(.white.opacity(0.3))
+                    .foregroundStyle(Palette.muted)
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(Palette.textPrimary)
             .padding(.vertical, 8)
         }
     }

@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 struct MerchantHomeView: View {
     @EnvironmentObject private var session: SessionViewModel
@@ -10,7 +11,7 @@ struct MerchantHomeView: View {
         ZStack(alignment: .bottom) {
             // Refined background
             ZStack {
-                LinearGradient(colors: [Palette.midnightSoft, Palette.navy], startPoint: .top, endPoint: .bottom)
+                Color(hex: "F5F5F5")
                     .ignoresSafeArea()
 
                 Circle()
@@ -54,15 +55,16 @@ struct MerchantHomeView: View {
                 VStack(alignment: .leading, spacing: 1) {
                     Text("Loofy")
                         .font(.title3.weight(.bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Palette.textPrimary)
                     Text("Merchant")
                         .font(.caption2.weight(.medium))
                         .foregroundStyle(Palette.mint)
                 }
+                .fixedSize()
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Sign Out") { session.signOut() }
-                    .foregroundStyle(.white.opacity(0.85))
+                    .foregroundStyle(Palette.textPrimary)
             }
         }
         .sheet(isPresented: $showScanner) {
@@ -100,7 +102,7 @@ private struct ScanHeroCard: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Ready to Scan")
                         .font(.title3.weight(.bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Palette.textPrimary)
                     Text("Stamp or redeem customer rewards instantly")
                         .font(.subheadline)
                         .foregroundStyle(Palette.muted)
@@ -121,10 +123,10 @@ private struct ScanHeroCard: View {
                 .padding(.vertical, 16)
                 .frame(maxWidth: .infinity)
                 .background(
-                    LinearGradient(colors: [Palette.mint, Color(hex: "7C3AED")], startPoint: .leading, endPoint: .trailing),
+                    LinearGradient(colors: [Color(hex: "1A1A1A"), Color(hex: "333333")], startPoint: .leading, endPoint: .trailing),
                     in: RoundedRectangle(cornerRadius: 16)
                 )
-                .shadow(color: Palette.mint.opacity(0.2), radius: 10, y: 4)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, y: 4)
             }
             .buttonStyle(.plain)
         }
@@ -156,7 +158,7 @@ private struct MerchantStatCard: View {
                 .font(.title3)
             Text(value)
                 .font(.title3.weight(.bold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Palette.textPrimary)
             Text(title)
                 .font(.system(size: 10))
                 .foregroundStyle(Palette.muted)
@@ -175,7 +177,7 @@ private struct MerchantQuickActions: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Quick Actions")
                 .font(.headline.weight(.semibold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Palette.textPrimary)
 
             HStack(spacing: 12) {
                 ActionButton(title: "Add Stamp", icon: "seal", color: Palette.mint) {}
@@ -204,7 +206,7 @@ private struct ActionButton: View {
                     .foregroundStyle(color)
                 Text(title)
                     .font(.subheadline.weight(.medium))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
                 Spacer()
             }
             .padding(14)
@@ -227,7 +229,7 @@ private struct ActiveProgramsSummary: View {
             HStack {
                 Text("My Programs")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
                 Spacer()
                 Text("\(programs.count) total")
                     .font(.caption)
@@ -237,7 +239,7 @@ private struct ActiveProgramsSummary: View {
             ForEach(programs, id: \.name) { program in
                 HStack(spacing: 12) {
                     Circle()
-                        .fill(program.active ? Palette.mint.opacity(0.15) : Color.white.opacity(0.06))
+                        .fill(program.active ? Palette.mint.opacity(0.15) : Color.black.opacity(0.03))
                         .frame(width: 40, height: 40)
                         .overlay(
                             Image(systemName: program.active ? "checkmark.seal.fill" : "pause.circle")
@@ -247,7 +249,7 @@ private struct ActiveProgramsSummary: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(program.name)
                             .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Palette.textPrimary)
                         Text(program.type)
                             .font(.caption)
                             .foregroundStyle(Palette.muted)
@@ -258,14 +260,14 @@ private struct ActiveProgramsSummary: View {
                     VStack(alignment: .trailing, spacing: 2) {
                         Text("\(program.members)")
                             .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Palette.textPrimary)
                         Text("members")
                             .font(.caption2)
                             .foregroundStyle(Palette.muted)
                     }
                 }
                 .padding(12)
-                .background(Color.white.opacity(0.03), in: RoundedRectangle(cornerRadius: 14))
+                .background(Color.black.opacity(0.02), in: RoundedRectangle(cornerRadius: 14))
             }
         }
         .padding(16)
@@ -285,7 +287,7 @@ private struct RecentTransactionsCard: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Recent Transactions")
                 .font(.headline.weight(.semibold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Palette.textPrimary)
 
             ForEach(transactions, id: \.name) { tx in
                 HStack {
@@ -295,13 +297,13 @@ private struct RecentTransactionsCard: View {
                         .overlay(
                             Text(String(tx.name.prefix(1)))
                                 .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
                         )
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(tx.name)
                             .font(.subheadline.weight(.medium))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Palette.textPrimary)
                         Text(tx.action)
                             .font(.caption)
                             .foregroundStyle(Palette.muted)
@@ -331,7 +333,7 @@ private struct MerchantProgramsContent: View {
             HStack {
                 Text("Loyalty Programs")
                     .font(.title3.weight(.bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
                 Spacer()
                 Button {
                     showCreateProgram = true
@@ -391,7 +393,7 @@ private struct ProgramDetailCard: View {
                     HStack(spacing: 8) {
                         Text(name)
                             .font(.headline.weight(.bold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Palette.textPrimary)
                         Text(isActive ? "ACTIVE" : "PAUSED")
                             .font(.system(size: 9, weight: .bold))
                             .foregroundStyle(.white)
@@ -399,7 +401,7 @@ private struct ProgramDetailCard: View {
                             .padding(.vertical, 3)
                             .background(
                                 isActive ?
-                                    LinearGradient(colors: [Palette.mint, Color(hex: "7C3AED")], startPoint: .leading, endPoint: .trailing) :
+                                    LinearGradient(colors: [Color(hex: "1A1A1A"), Color(hex: "333333")], startPoint: .leading, endPoint: .trailing) :
                                     LinearGradient(colors: [Palette.muted, Palette.muted], startPoint: .leading, endPoint: .trailing),
                                 in: Capsule()
                             )
@@ -413,13 +415,13 @@ private struct ProgramDetailCard: View {
                     Image(systemName: "ellipsis")
                         .foregroundStyle(Palette.muted)
                         .padding(8)
-                        .background(Color.white.opacity(0.06), in: Circle())
+                        .background(Color.black.opacity(0.03), in: Circle())
                 }
             }
 
             Text(description)
                 .font(.subheadline)
-                .foregroundStyle(.white.opacity(0.75))
+                .foregroundStyle(Palette.textSecondary)
 
             HStack(spacing: 0) {
                 ProgramStat(value: "\(members)", label: "Members")
@@ -442,7 +444,7 @@ private struct ProgramStat: View {
         VStack(spacing: 4) {
             Text(value)
                 .font(.headline.weight(.bold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Palette.textPrimary)
             Text(label)
                 .font(.caption)
                 .foregroundStyle(Palette.muted)
@@ -469,7 +471,7 @@ private struct MerchantCustomersContent: View {
             HStack {
                 Text("Customers")
                     .font(.title3.weight(.bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
                 Spacer()
                 Text("\(customers.count) total")
                     .font(.subheadline)
@@ -481,7 +483,7 @@ private struct MerchantCustomersContent: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(Palette.muted)
                 TextField("Search customers...", text: $searchText)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
             }
             .padding(14)
             .glassCard(cornerRadius: 14, opacity: 0.06, strokeOpacity: 0.08)
@@ -494,13 +496,13 @@ private struct MerchantCustomersContent: View {
                         .overlay(
                             Text(String(customer.name.prefix(1)))
                                 .font(.headline.weight(.semibold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
                         )
 
                     VStack(alignment: .leading, spacing: 3) {
                         Text(customer.name)
                             .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Palette.textPrimary)
                         Text("\(customer.stamps) stamps • \(customer.totalVisits) visits")
                             .font(.caption)
                             .foregroundStyle(Palette.muted)
@@ -515,7 +517,7 @@ private struct MerchantCustomersContent: View {
                         if customer.stamps >= 10 {
                             Text("REWARD!")
                                 .font(.system(size: 9, weight: .bold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 2)
                                 .background(
@@ -541,7 +543,7 @@ private struct MerchantSettingsContent: View {
             VStack(alignment: .leading, spacing: 14) {
                 Text("Store Details")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
 
                 MerchantSettingRow(label: "Store Name", value: "Bean & Brew Coffee")
                 MerchantSettingRow(label: "Location", value: "123 Market Street")
@@ -555,7 +557,7 @@ private struct MerchantSettingsContent: View {
             VStack(alignment: .leading, spacing: 14) {
                 Text("Preferences")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
 
                 MerchantSettingButton(title: "Branding & Colors", icon: "paintpalette")
                 MerchantSettingButton(title: "Notification Settings", icon: "bell.badge")
@@ -570,7 +572,7 @@ private struct MerchantSettingsContent: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text("Your Plan")
                     .font(.headline.weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Free Plan")
@@ -583,7 +585,7 @@ private struct MerchantSettingsContent: View {
                     Spacer()
                     Button("Upgrade") {}
                         .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Palette.textPrimary)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                         .background(
@@ -607,7 +609,7 @@ private struct MerchantSettingRow: View {
     var body: some View {
         HStack {
             Text(label)
-                .foregroundStyle(.white.opacity(0.75))
+                .foregroundStyle(Palette.textSecondary)
             Spacer()
             Text(value)
                 .foregroundStyle(accent)
@@ -627,7 +629,7 @@ private struct MerchantSettingButton: View {
                     .foregroundStyle(Palette.muted)
                     .frame(width: 24)
                 Text(title)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.textPrimary)
                 Spacer()
                 Image(systemName: "chevron.right")
                     .foregroundStyle(Color.white.opacity(0.25))
@@ -640,63 +642,104 @@ private struct MerchantSettingButton: View {
 
 // MARK: - Merchant Scanner View
 
-private struct MerchantScannerView: View {
+struct MerchantScannerView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var manualCode = ""
     @State private var pointsToAdd: Int = 1
     @State private var scannedCustomer: String? = nil
+    @State private var scannedCode: String = ""
+    @State private var showManualEntry = false
+    @State private var torchOn = false
 
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(colors: [Palette.midnight, Palette.midnightSoft], startPoint: .top, endPoint: .bottom)
+                Color.white
                     .ignoresSafeArea()
 
                 ScrollView {
                     VStack(spacing: 24) {
                         if scannedCustomer == nil {
-                            // Scanner area
+                            // Live camera scanner
                             VStack(spacing: 16) {
-                                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                    .fill(Color.white.opacity(0.04))
-                                    .frame(height: 280)
-                                    .overlay(
-                                        VStack(spacing: 16) {
-                                            Image(systemName: "qrcode.viewfinder")
-                                                .font(.system(size: 64))
-                                                .foregroundStyle(Palette.mint)
-                                            Text("Point camera at customer's QR code")
-                                                .font(.subheadline)
-                                                .foregroundStyle(Palette.muted)
-                                        }
-                                    )
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 22)
-                                            .stroke(Palette.mint.opacity(0.25), lineWidth: 1.5)
-                                    )
-
-                                Text("OR enter code manually")
-                                    .font(.caption)
-                                    .foregroundStyle(Palette.muted)
-
-                                HStack(spacing: 12) {
-                                    TextField("Customer code", text: $manualCode)
-                                        .padding(14)
-                                        .glassCard(cornerRadius: 12, opacity: 0.06, strokeOpacity: 0.10)
-                                        .foregroundStyle(.white)
-
-                                    Button {
+                                ZStack {
+                                    QRScannerView { code in
+                                        scannedCode = code
+                                        // Simulate customer lookup from scanned QR
                                         scannedCustomer = "Sarah M."
-                                    } label: {
-                                        Text("Look Up")
-                                            .font(.subheadline.weight(.semibold))
+                                    }
+                                    .frame(height: 300)
+                                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+
+                                    // Scan overlay frame
+                                    RoundedRectangle(cornerRadius: 22)
+                                        .stroke(Palette.mint.opacity(0.4), lineWidth: 2)
+                                        .frame(height: 300)
+
+                                    // Corner brackets
+                                    ScannerOverlay()
+                                        .frame(height: 300)
+
+                                    // Torch toggle
+                                    VStack {
+                                        HStack {
+                                            Spacer()
+                                            Button {
+                                                torchOn.toggle()
+                                                toggleTorch(torchOn)
+                                            } label: {
+                                                Image(systemName: torchOn ? "flashlight.on.fill" : "flashlight.off.fill")
+                                                    .font(.body.weight(.semibold))
+                                                    .foregroundStyle(.white)
+                                                    .padding(10)
+                                                    .background(.ultraThinMaterial, in: Circle())
+                                            }
+                                            .padding(12)
+                                        }
+                                        Spacer()
+                                        Text("Align QR code within frame")
+                                            .font(.caption.weight(.medium))
                                             .foregroundStyle(.white)
-                                            .padding(.horizontal, 18)
-                                            .padding(.vertical, 14)
-                                            .background(
-                                                LinearGradient(colors: [Palette.mint, Color(hex: "7C3AED")], startPoint: .leading, endPoint: .trailing),
-                                                in: RoundedRectangle(cornerRadius: 12)
-                                            )
+                                            .padding(.horizontal, 16)
+                                            .padding(.vertical, 8)
+                                            .background(.ultraThinMaterial, in: Capsule())
+                                            .padding(.bottom, 16)
+                                    }
+                                    .frame(height: 300)
+                                }
+
+                                Button {
+                                    showManualEntry.toggle()
+                                } label: {
+                                    HStack(spacing: 6) {
+                                        Image(systemName: "keyboard")
+                                        Text(showManualEntry ? "Hide manual entry" : "Enter code manually")
+                                    }
+                                    .font(.caption.weight(.medium))
+                                    .foregroundStyle(Palette.muted)
+                                }
+
+                                if showManualEntry {
+                                    HStack(spacing: 12) {
+                                        TextField("Customer code", text: $manualCode)
+                                            .padding(14)
+                                            .glassCard(cornerRadius: 12, opacity: 0.06, strokeOpacity: 0.10)
+                                            .foregroundStyle(Palette.textPrimary)
+
+                                        Button {
+                                            scannedCode = manualCode
+                                            scannedCustomer = "Sarah M."
+                                        } label: {
+                                            Text("Look Up")
+                                                .font(.subheadline.weight(.semibold))
+                                                .foregroundStyle(.white)
+                                                .padding(.horizontal, 18)
+                                                .padding(.vertical, 14)
+                                                .background(
+                                                    LinearGradient(colors: [Color(hex: "1A1A1A"), Color(hex: "333333")], startPoint: .leading, endPoint: .trailing),
+                                                    in: RoundedRectangle(cornerRadius: 12)
+                                                )
+                                        }
                                     }
                                 }
                             }
@@ -715,10 +758,10 @@ private struct MerchantScannerView: View {
 
                                     Text("Customer Found")
                                         .font(.headline)
-                                        .foregroundStyle(.white)
+                                        .foregroundStyle(Palette.textPrimary)
                                     Text(scannedCustomer ?? "")
                                         .font(.title3.weight(.bold))
-                                        .foregroundStyle(.white)
+                                        .foregroundStyle(Palette.textPrimary)
                                     Text("7/10 stamps • Gold Member")
                                         .font(.subheadline)
                                         .foregroundStyle(Palette.muted)
@@ -741,7 +784,7 @@ private struct MerchantScannerView: View {
 
                                         Text("\(pointsToAdd)")
                                             .font(.system(size: 48, weight: .bold, design: .rounded))
-                                            .foregroundStyle(.white)
+                                            .foregroundStyle(Palette.textPrimary)
                                             .frame(width: 80)
 
                                         Button {
@@ -767,10 +810,10 @@ private struct MerchantScannerView: View {
                                             .padding(.vertical, 16)
                                             .frame(maxWidth: .infinity)
                                             .background(
-                                                LinearGradient(colors: [Palette.mint, Color(hex: "7C3AED")], startPoint: .leading, endPoint: .trailing),
+                                                LinearGradient(colors: [Color(hex: "1A1A1A"), Color(hex: "333333")], startPoint: .leading, endPoint: .trailing),
                                                 in: RoundedRectangle(cornerRadius: 14)
                                             )
-                                            .shadow(color: Palette.mint.opacity(0.2), radius: 8, y: 4)
+                                            .shadow(color: Color.black.opacity(0.1), radius: 8, y: 4)
                                     }
 
                                     Button {
@@ -778,7 +821,7 @@ private struct MerchantScannerView: View {
                                     } label: {
                                         Text("Redeem")
                                             .font(.headline.weight(.semibold))
-                                            .foregroundStyle(.white)
+                                            .foregroundStyle(Palette.textPrimary)
                                             .padding(.vertical, 16)
                                             .frame(maxWidth: .infinity)
                                             .background(
@@ -806,7 +849,7 @@ private struct MerchantScannerView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("Scanner")
                         .font(.headline)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Palette.textPrimary)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") { dismiss() }
@@ -829,7 +872,7 @@ private struct CreateProgramView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(colors: [Palette.midnight, Palette.midnightSoft], startPoint: .top, endPoint: .bottom)
+                Color.white
                     .ignoresSafeArea()
 
                 ScrollView {
@@ -838,18 +881,18 @@ private struct CreateProgramView: View {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Program Name")
                                 .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
                             TextField("e.g. Coffee Loyalty Card", text: $programName)
                                 .padding(14)
                                 .glassCard(cornerRadius: 12, opacity: 0.06, strokeOpacity: 0.10)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
                         }
 
                         // Program type
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Program Type")
                                 .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
 
                             ForEach(ProgramType.allCases) { type in
                                 Button {
@@ -862,7 +905,7 @@ private struct CreateProgramView: View {
                                         VStack(alignment: .leading, spacing: 2) {
                                             Text(type.title)
                                                 .font(.subheadline.weight(.semibold))
-                                                .foregroundStyle(.white)
+                                                .foregroundStyle(Palette.textPrimary)
                                             Text(type.description)
                                                 .font(.caption)
                                                 .foregroundStyle(Palette.muted)
@@ -875,12 +918,12 @@ private struct CreateProgramView: View {
                                     }
                                     .padding(14)
                                     .background(
-                                        selectedType == type ? Palette.mint.opacity(0.08) : Color.white.opacity(0.04),
+                                        selectedType == type ? Palette.mint.opacity(0.08) : Color.black.opacity(0.02),
                                         in: RoundedRectangle(cornerRadius: 14)
                                     )
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 14)
-                                            .stroke(selectedType == type ? Palette.mint.opacity(0.25) : Color.white.opacity(0.06))
+                                            .stroke(selectedType == type ? Palette.mint.opacity(0.25) : Color.black.opacity(0.03))
                                     )
                                 }
                                 .buttonStyle(.plain)
@@ -892,10 +935,10 @@ private struct CreateProgramView: View {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Stamps Required")
                                     .font(.subheadline.weight(.semibold))
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(Palette.textPrimary)
                                 Stepper(value: $stampCount, in: 3...20) {
                                     Text("\(stampCount) stamps to earn reward")
-                                        .foregroundStyle(.white)
+                                        .foregroundStyle(Palette.textPrimary)
                                 }
                             }
                             .padding(14)
@@ -906,11 +949,11 @@ private struct CreateProgramView: View {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Reward")
                                 .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
                             TextField("e.g. Free coffee", text: $rewardDescription)
                                 .padding(14)
                                 .glassCard(cornerRadius: 12, opacity: 0.06, strokeOpacity: 0.10)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Palette.textPrimary)
                         }
 
                         // Create button
@@ -923,10 +966,10 @@ private struct CreateProgramView: View {
                                 .padding(.vertical, 16)
                                 .frame(maxWidth: .infinity)
                                 .background(
-                                    LinearGradient(colors: [Palette.mint, Color(hex: "7C3AED")], startPoint: .leading, endPoint: .trailing),
+                                    LinearGradient(colors: [Color(hex: "1A1A1A"), Color(hex: "333333")], startPoint: .leading, endPoint: .trailing),
                                     in: RoundedRectangle(cornerRadius: 14)
                                 )
-                                .shadow(color: Palette.mint.opacity(0.2), radius: 8, y: 4)
+                                .shadow(color: Color.black.opacity(0.1), radius: 8, y: 4)
                         }
                         .buttonStyle(.plain)
                         .padding(.top, 8)
@@ -938,7 +981,7 @@ private struct CreateProgramView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("New Program")
                         .font(.headline)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Palette.textPrimary)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Cancel") { dismiss() }
@@ -1005,7 +1048,7 @@ private struct MerchantTabBar: View {
                                 Text(tab.label)
                                     .font(.system(size: 10, weight: .medium))
                             }
-                            .foregroundStyle(selectedTab == tab ? .white : Palette.muted)
+                            .foregroundStyle(selectedTab == tab ? Palette.textPrimary : Palette.muted)
                             .frame(maxWidth: .infinity)
                         }
                         .buttonStyle(.plain)
@@ -1017,51 +1060,29 @@ private struct MerchantTabBar: View {
             .padding(.bottom, 28)
             .background(
                 RoundedRectangle(cornerRadius: 28, style: .continuous)
-                    .fill(.ultraThinMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 28, style: .continuous)
-                            .stroke(
-                                LinearGradient(
-                                    colors: [Color.white.opacity(0.10), Color.white.opacity(0.04)],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            )
-                    )
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.06), radius: 12, y: -2)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                    .stroke(Color.black.opacity(0.04))
             )
             .padding(.horizontal, 12)
 
-            // Raised scan button with glow
+            // Raised scan button
             Button {
                 showScanner = true
             } label: {
                 ZStack {
                     Circle()
-                        .fill(Palette.mint.opacity(0.15))
+                        .fill(Color.black.opacity(0.04))
                         .frame(width: 80, height: 80)
                         .blur(radius: 8)
 
                     Circle()
-                        .fill(
-                            LinearGradient(
-                                colors: [Palette.mint, Color(hex: "7C3AED")],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
+                        .fill(Color(hex: "1A1A1A"))
                         .frame(width: 68, height: 68)
-                        .overlay(
-                            Circle()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [.white.opacity(0.25), .clear],
-                                        startPoint: .topLeading,
-                                        endPoint: .center
-                                    )
-                                )
-                                .padding(2)
-                        )
-                        .shadow(color: Palette.mint.opacity(0.35), radius: 14, y: 4)
+                        .shadow(color: Color.black.opacity(0.15), radius: 14, y: 4)
 
                     Image(systemName: "qrcode.viewfinder")
                         .font(.system(size: 28, weight: .bold))
@@ -1099,6 +1120,60 @@ private enum MerchantTab: String, CaseIterable, Identifiable {
         case .settings: return "Settings"
         }
     }
+}
+
+// MARK: - Scanner Overlay
+
+private struct ScannerOverlay: View {
+    var body: some View {
+        GeometryReader { geo in
+            let size: CGFloat = min(geo.size.width, geo.size.height) * 0.6
+            let cornerLen: CGFloat = 28
+            let lineWidth: CGFloat = 4
+
+            ZStack {
+                // Top-left
+                Path { p in
+                    p.move(to: CGPoint(x: 0, y: cornerLen))
+                    p.addLine(to: CGPoint(x: 0, y: 0))
+                    p.addLine(to: CGPoint(x: cornerLen, y: 0))
+                }
+                .stroke(Color.white, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                // Top-right
+                Path { p in
+                    p.move(to: CGPoint(x: size - cornerLen, y: 0))
+                    p.addLine(to: CGPoint(x: size, y: 0))
+                    p.addLine(to: CGPoint(x: size, y: cornerLen))
+                }
+                .stroke(Color.white, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                // Bottom-left
+                Path { p in
+                    p.move(to: CGPoint(x: 0, y: size - cornerLen))
+                    p.addLine(to: CGPoint(x: 0, y: size))
+                    p.addLine(to: CGPoint(x: cornerLen, y: size))
+                }
+                .stroke(Color.white, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                // Bottom-right
+                Path { p in
+                    p.move(to: CGPoint(x: size - cornerLen, y: size))
+                    p.addLine(to: CGPoint(x: size, y: size))
+                    p.addLine(to: CGPoint(x: size, y: size - cornerLen))
+                }
+                .stroke(Color.white, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+            }
+            .frame(width: size, height: size)
+            .position(x: geo.size.width / 2, y: geo.size.height / 2)
+        }
+        .allowsHitTesting(false)
+    }
+}
+
+private func toggleTorch(_ on: Bool) {
+    guard let device = AVCaptureDevice.default(for: .video),
+          device.hasTorch else { return }
+    try? device.lockForConfiguration()
+    device.torchMode = on ? .on : .off
+    device.unlockForConfiguration()
 }
 
 // MARK: - Preview

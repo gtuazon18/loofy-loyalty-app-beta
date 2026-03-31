@@ -5,31 +5,35 @@ enum Palette {
     static let silver = LinearGradient(colors: [Color(hex: "E8E0F0"), Color(hex: "B8A9D4")], startPoint: .topLeading, endPoint: .bottomTrailing)
     static let gold = LinearGradient(colors: [Color(hex: "FFD89E"), Color(hex: "F5A623")], startPoint: .topLeading, endPoint: .bottomTrailing)
     static let platinum = LinearGradient(colors: [Color(hex: "E0E7FF"), Color(hex: "A5B4FC")], startPoint: .topLeading, endPoint: .bottomTrailing)
-    static let diamond = LinearGradient(colors: [Color(hex: "2D1B4E"), Color(hex: "1A0F30")], startPoint: .topLeading, endPoint: .bottomTrailing)
+    static let diamond = LinearGradient(colors: [Color(hex: "1A1A1A"), Color(hex: "0A0A0A")], startPoint: .topLeading, endPoint: .bottomTrailing)
 
-    // Brand/core — warm & friendly
-    static let midnight = Color(hex: "110B22")       // Richer deep purple
-    static let midnightSoft = Color(hex: "1C1238")    // Soft purple-black
-    static let navy = Color(hex: "271A4E")             // Warm indigo
-    static let ice = Color(hex: "F0EAFF")              // Soft lavender white
-    static let goldAccent = Color(hex: "FFB347")       // Warm friendly orange
-    static let magenta = Color(hex: "FF6B8A")          // Soft coral pink
-    static let mint = Color(hex: "A78BFA")             // Friendly purple (primary accent)
-    static let muted = Color(hex: "8E82AB")            // Warm gray-purple (slightly more visible)
-    static let cardStroke = Color.white.opacity(0.10)
-    static let surface = Color.white.opacity(0.07)
+    // Core — clean white & black
+    static let midnight = Color(hex: "FAFAFA")         // Near-white background
+    static let midnightSoft = Color(hex: "F5F5F5")     // Soft gray background
+    static let navy = Color(hex: "EFEFEF")              // Light gray
+    static let ice = Color(hex: "FAFAFA")               // White
+    static let goldAccent = Color(hex: "F5A623")        // Warm gold
+    static let magenta = Color(hex: "FF6B8A")           // Soft coral pink
+    static let mint = Color(hex: "1A1A1A")              // Primary accent — black
+    static let muted = Color(hex: "999999")             // Medium gray
+    static let cardStroke = Color.black.opacity(0.06)
+    static let surface = Color.white
 
     // Accent colors
     static let peach = Color(hex: "FFAB91")
-    static let lavender = Color(hex: "C4B5FD")
-    static let sky = Color(hex: "7DD3FC")
-    static let rose = Color(hex: "FDA4AF")
-    static let lime = Color(hex: "BEF264")
-    static let warmWhite = Color(hex: "FBF7FF")
+    static let lavender = Color(hex: "8B5CF6")
+    static let sky = Color(hex: "3B82F6")
+    static let rose = Color(hex: "F43F5E")
+    static let lime = Color(hex: "22C55E")
+    static let warmWhite = Color(hex: "FFFFFF")
+
+    // Primary text
+    static let textPrimary = Color(hex: "1A1A1A")
+    static let textSecondary = Color(hex: "666666")
 
     // Primary gradients
     static let brandGradient = LinearGradient(
-        colors: [Color(hex: "7C3AED"), Color(hex: "A78BFA")],
+        colors: [Color(hex: "1A1A1A"), Color(hex: "333333")],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
@@ -41,27 +45,27 @@ enum Palette {
     )
 
     static let bgGradient = LinearGradient(
-        colors: [Color(hex: "110B22"), Color(hex: "1C1238"), Color(hex: "271A4E")],
+        colors: [Color(hex: "FFFFFF"), Color(hex: "F5F5F5")],
         startPoint: .top,
         endPoint: .bottom
     )
 
-    // Aesthetic: soft glow gradient for cards
+    // Subtle card glow
     static let glowGradient = LinearGradient(
-        colors: [Color(hex: "A78BFA").opacity(0.15), Color(hex: "7C3AED").opacity(0.05)],
+        colors: [Color.black.opacity(0.02), Color.black.opacity(0.01)],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
 
-    // Aesthetic: subtle shimmer for sections
+    // Section gradient
     static let sectionGradient = LinearGradient(
-        colors: [Color.white.opacity(0.08), Color.white.opacity(0.04)],
+        colors: [Color(hex: "F8F8F8"), Color(hex: "F0F0F0")],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
 }
 
-// MARK: - Glassmorphism Card Modifier
+// MARK: - Clean Card Modifier
 
 struct GlassCard: ViewModifier {
     var cornerRadius: CGFloat = 20
@@ -72,37 +76,27 @@ struct GlassCard: ViewModifier {
         content
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(Color.white.opacity(opacity))
-                    .background(
-                        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                            .fill(.ultraThinMaterial.opacity(0.3))
-                    )
+                    .fill(Color.white)
             )
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .stroke(
-                        LinearGradient(
-                            colors: [Color.white.opacity(strokeOpacity), Color.white.opacity(strokeOpacity * 0.3)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 0.8
-                    )
+                    .stroke(Color.black.opacity(0.06), lineWidth: 1)
             )
+            .shadow(color: Color.black.opacity(0.04), radius: 8, y: 4)
     }
 }
 
 // MARK: - Soft Shadow Modifier
 
 struct SoftShadow: ViewModifier {
-    var color: Color = Palette.mint
+    var color: Color = .black
     var radius: CGFloat = 16
     var y: CGFloat = 8
 
     func body(content: Content) -> some View {
         content
-            .shadow(color: color.opacity(0.15), radius: radius, y: y)
+            .shadow(color: color.opacity(0.06), radius: radius, y: y)
     }
 }
 
@@ -111,7 +105,7 @@ extension View {
         modifier(GlassCard(cornerRadius: cornerRadius, opacity: opacity, strokeOpacity: strokeOpacity))
     }
 
-    func softShadow(color: Color = Palette.mint, radius: CGFloat = 16, y: CGFloat = 8) -> some View {
+    func softShadow(color: Color = .black, radius: CGFloat = 16, y: CGFloat = 8) -> some View {
         modifier(SoftShadow(color: color, radius: radius, y: y))
     }
 }
